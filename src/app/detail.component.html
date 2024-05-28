@@ -1,0 +1,63 @@
+<ActionBar [title]="data.eyebrow(data.currentDetailId)"> </ActionBar>
+<GridLayout rows="*" columns="*">
+  @if (data.currentDetailId === 'solar') {
+  <Image
+    src="~/assets/SolarBackground.png"
+    stretch="aspectFill"
+    class="h-right align-bottom"
+  />
+  }
+  <GridLayout columns="*,50,*" class="px-20">
+    <StackLayout col="0" class="align-middle">
+      <Label class="text-[50px] font-bold mt-1">{{
+        data.heading(data.currentDetailId)
+      }}</Label>
+      <Label class="text-[20px] font-semibold mt-3" textWrap="true">{{
+        data.overview(data.currentDetailId)
+      }}</Label>
+      <Button
+        class="rounded-full bg-slate-400/70 p-4 w-[200] mt-4 text-white font-bold"
+        [text]="buttonText()"
+        (tap)="openWindow()"
+      >
+      </Button>
+    </StackLayout>
+    @if (data.currentDetailId !== 'orbit') {
+    <StackLayout col="2" class="align-middle">
+      <Image
+        [src]="detailImage()"
+        stretch="none"
+      />
+    </StackLayout>
+    } @else {
+    <GridLayout
+      col="2"
+      rows="*,auto"
+      class="align-middle"
+    >
+      <Model3D
+        [src]="
+          activeModel
+        "
+        [dragRotation]="{ yawLimit: 20, pitchLimit: 20 }"
+        depth="200"
+        class="align-middle h-full mb-[200]"
+        [ngClass]="{
+          'w-full': activeModel !== 'Moon',
+          'w-[550]': activeModel === 'Moon',
+        }"
+      ></Model3D>
+      <SegmentedBar
+        row="1"
+        (selectedIndexChanged)="changeModel($event)"
+        selectedTextColor="white"
+        class="w-[350] mb-8"
+      >
+        <SegmentedBarItem title="Satellite"></SegmentedBarItem>
+        <SegmentedBarItem title="Moon"></SegmentedBarItem>
+        <SegmentedBarItem title="Telescope"></SegmentedBarItem>
+      </SegmentedBar>
+    </GridLayout>
+    }
+  </GridLayout>
+</GridLayout>
