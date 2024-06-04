@@ -37,8 +37,8 @@ export class DetailComponent {
     });
   }
 
-  close() {
-    this.router.back();
+  changeModel(args) {
+    this.activeModel = this.models[args.newIndex];
   }
 
   openWindow() {
@@ -77,9 +77,5 @@ export class DetailComponent {
     } else {
       win.close();
     }
-  }
-
-  changeModel(args) {
-    this.activeModel = this.models[args.newIndex];
   }
 }
